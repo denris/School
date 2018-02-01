@@ -3,7 +3,7 @@
 
 ### Take care of any necessary imports ###
 import csv
-from students import Student, School
+from school import  School, Student, Teacher
 
 # List of the Students Names
 students = []
@@ -45,7 +45,7 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
     quiz_num = quizes[1:]
     quiz_grades = everything[1:]
     
-    ''' Start with getting our Stdents:Quiz_grades Dict '''
+    ######### Start with getting our Stdents:Quiz_grades Dict #########
     
     for student in students:
         studentQgrades[student] = dict.fromkeys(quiz_num, '')
@@ -63,7 +63,7 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
                 studentQgrades[student][quiz_num[quiz_counter]] = grade[grade_counter]       
                 quiz_counter += 1
    
-    ''' Next get our Stdents:Text_grades Dict '''
+    ######### Next get our Stdents:Text_grades Dict #########
     
     ### Reading from the rows in tests spreedsheet ###
     for row in readCSV_tests:
@@ -91,7 +91,7 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
                 studentTgrades[student][test_num[test_counter]] = grade[grade_counter]       
                 test_counter += 1    
     
-    ''' Make Students Objects to simplifiy calculations '''
+    ######### Make Students Objects to simplifiy calculations #########
     
     ### Create Student class objects from students list ###
     for person in students:
@@ -107,4 +107,7 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
             vars()[first].set_grades(quiz,studentQgrades,person)
 
     
-    print(Stephanie.school)
+    print(Student.programming_students)
+    Denver = Teacher('Denver', 'Risser', "Mr.Denver", "programming")
+    print(Denver.classes)
+    print(Denver.get_grade(Stephanie, "T1"))

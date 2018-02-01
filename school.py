@@ -3,24 +3,19 @@ class School():
         self.school = school
         
     
-
-
 class Student(School):
     
-    program_students = []
+    programming_students = []
 
-    def __init__(self, first, last, grade, which_class):
+    def __init__(self, first, last, grade=None, which_class=None):
         super().__init__()
         self.first = first
         self.last = last
         self.grade = grade
         self.which_class = which_class
         
-        
-        
-        #if which_class == 'programming':
-        #    program_students.append(self.get_fullname)
-        #    print(program_students)
+        if which_class == "programming":
+            Student.programming_students.append(self.get_fullname)
         
         
     def set_grades(self, item, dictionary, person):
@@ -53,7 +48,15 @@ class Student(School):
     def __str__(self):
         return '{}, {}, {}'.format(self.get_fullname, self.grade, self.which_class)
 
-class Teacher(School):
+class Teacher(Student):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, first, last, title, classes=None):
+        super().__init__(first, last)
+        self.title = title
+        if classes is None:
+            self.classes = []
+        else:
+            self.classes = classes
+    @staticmethod        
+    def get_grade(Student, grade_number):
+        return Student.get_grade(grade_number)
