@@ -1,3 +1,5 @@
+from math import ceil
+
 class School():
     def __init__(self, school="LVCS"):
         self.school = school
@@ -24,19 +26,11 @@ class Student(School):
     def get_grade(self, grade_number):
         return float(vars(self)[grade_number])
 
-    def Fquart_Qav(self):
-        return (self.get_grade('Q1') + self.get_grade('Q2')) / 2
-        
-
-    def Fquart_Gav(self):
-        return -(-(self.get_grade('T1')) // 2) + -(-self.Fquart_Qav() // 2)
-         
-
-    def quarter_av(self):
-        pass
-
-    def year_av(self):
-        pass
+    def quart_av(self, q_num1, q_num2, t_num):
+        quiz_grade = (((self.get_grade(q_num1) + self.get_grade(q_num2))) / 2) / 2
+        test_grade = self.get_grade(t_num) / 2
+        av = quiz_grade + test_grade
+        return  print(ceil(av))
 
     @property
     def get_fullname(self):
@@ -57,6 +51,7 @@ class Teacher(Student):
             self.classes = []
         else:
             self.classes = classes
+    
     @staticmethod        
     def get_grade(Student, grade_number):
-        return Student.get_grade(grade_number)
+        return print(Student.get_grade(grade_number))

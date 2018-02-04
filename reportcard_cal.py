@@ -4,7 +4,7 @@
 ### Take care of any necessary imports ###
 import csv
 from school import  School, Student, Teacher
-
+from tkinter import *
 # List of the Students Names
 students = []
     
@@ -97,7 +97,7 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
     for person in students:
         first, last = person.split(' ')
         vars()[first] = Student(first, last, 11, 'programming')
-    
+
     ### Set Student objects grades ###
     for person in students:   
         for test in test_num:
@@ -105,9 +105,68 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
             vars()[first].set_grades(test,studentTgrades,person)
         for quiz in quiz_num:
             vars()[first].set_grades(quiz,studentQgrades,person)
+    Denver = Teacher('Denver', 'Risser', "Mr.Denver", "programming")
+    
+    
+    ### Making the GUI ###
+    
+    class Buttons():
+
+        def __init__(self, master):
+            frame = Frame(root)
+            frame.grid_columnconfigure(0, weight=1)
+            frame.grid_columnconfigure(1, weight=1)
+            frame.grid_columnconfigure(2, weight=1)
+            frame.grid_columnconfigure(3, weight=1)
+            frame.grid_rowconfigure(0, weight=1)
+            frame.grid_rowconfigure(1, weight=1)
+            frame.grid_rowconfigure(2, weight=1)
+            frame.grid_rowconfigure(3, weight=1)
+            frame.grid(row=0,column=0,sticky=N+E)
+            
+            d = {}
+            for x in range(len(Student.programming_students)):
+                d["string{}".format(x)]=int
+            counter = 0
+            while counter <= (len(Student.programming_students)-1):
+                for person in Student.programming_students:
+                    first, last = person.split(' ')  
+                    d[counter] = Button(frame, text="Get Average", width=10, command=lambda:eval(first).quart_av('Q1', 'Q2', 'T1')).grid(row=[counter], column=1)
+                    counter += 1
+
+            
+
+
+    root = Tk()
+    root.title("Grade Manager")
+    root.minsize(300,300)
+    root.geometry("1000x800")
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+    root.grid_columnconfigure(2, weight=1)
+    root.grid_columnconfigure(3, weight=1)
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_rowconfigure(1, weight=1)
+    root.grid_rowconfigure(2, weight=1)
+    root.grid_rowconfigure(3, weight=1)
+    av_button = Buttons(root)
+    
+    
+    
+    root.mainloop()
+  
+
+        
+    
+    
+    
+    #display_av = 
+    
 
     
-    print(Student.programming_students)
-    Denver = Teacher('Denver', 'Risser', "Mr.Denver", "programming")
-    print(Denver.classes)
-    print(Denver.get_grade(Stephanie, "T1"))
+    
+   
+    Stephanie.quart_av('Q1', 'Q2', 'T1')
+    #Denver.get_grade(Logan, "T1")
+    #print(Denver.classes)
+    
