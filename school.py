@@ -1,11 +1,13 @@
 from math import ceil
 
+
 class School():
     def __init__(self, school="LVCS"):
         self.school = school
-        
-    
+
+
 class Student(School):
+
     
     programming_students = []
 
@@ -27,18 +29,23 @@ class Student(School):
         return float(vars(self)[grade_number])
 
     def quart_av(self, q_num1, q_num2, t_num):
+        global grade
+        global text_Input
         quiz_grade = (((self.get_grade(q_num1) + self.get_grade(q_num2))) / 2) / 2
         test_grade = self.get_grade(t_num) / 2
         av = quiz_grade + test_grade
-        return  print(ceil(av))
-
+        av = ceil(av)
+        grade = str(av)
+        self.text_Input.set(grade + '%')
+        return av
+        
     @property
     def get_fullname(self):
         return '{} {}'.format(self.first, self.last)
 
     def __repr__(self):
         return "Student({}, {}, {}, {})".format(self.first, self.last, self.grade, self.which_class)
-    
+
     def __str__(self):
         return '{}, {}, {}'.format(self.get_fullname, self.grade, self.which_class)
 
@@ -51,7 +58,7 @@ class Teacher(Student):
             self.classes = []
         else:
             self.classes = classes
-    
+
     @staticmethod        
     def get_grade(Student, grade_number):
         return print(Student.get_grade(grade_number))
