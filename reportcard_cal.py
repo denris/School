@@ -7,6 +7,9 @@ from school import  School, Student, Teacher
 from tkinter import *
 
 
+# Quiz & Test grades Path
+qu_path = 'E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv'
+test_path = 'E:\\Documents\\School\\Grades\\Tests\\Tests_grades.csv'
 
 # List of the Students Names
 students = []
@@ -29,8 +32,8 @@ studentQgrades = {}
 studentTgrades = {}
 
 ###  Open our file to pull our grade averages info ###
-with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quizgrades, \
-    open('E:\\Documents\\School\\Grades\\Tests\\Tests_grades.csv', 'r') as testgrades:
+with open(qu_path, 'r') as quizgrades, \
+    open(test_path, 'r') as testgrades:
     readCSV_quizes = csv.reader(quizgrades, delimiter=',')
     readCSV_tests = csv.reader(testgrades, delimiter=',')
         
@@ -127,9 +130,13 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
     class Buttons():
         
         def __init__(self, master):
-            frame = Frame(root)
-            frame.grid(sticky=N+S+E+W)
-            
+            frame = Frame(master)
+            frame.grid(row=1, column=0, sticky=N+S+W)
+            for i in range(20):
+                Grid.rowconfigure(frame, i, weight=1)
+            for i in range(20):
+                Grid.columnconfigure(frame, i, weight=1)
+
             counter = 0
             ### Making a dict so I can iterate to make multiple Entry Boxes ###
             e = {}
@@ -139,7 +146,6 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
             
             ### Copying dict e so I can iterate to make multiple Buttons ###
             
-           
             qb = e.copy()
             qb2 = e.copy()
             qb3 = e.copy()
@@ -148,26 +154,42 @@ with open('E:\\Documents\\School\\Grades\\Quizes\\Quiz_grades.csv', 'r') as quiz
             l = e.copy()
             while counter < (len(objs)):
                 for person in objs:
-                    l[counter] = Label(frame, anchor=W, text=person.first + ':').grid(row=[counter], column=0, stick=N+S+E+W)
-                    e[counter] =Entry(frame,font=('arial', 12, 'bold'),width=5, textvariable=person.text_Input, bd= 3,
-                                        bg="powder blue", justify='left').grid(row=[counter], column=1, stick=N+S+E+W)
-                    qb[counter] = Button(frame, text="1 Quart", width=5, borderwidth=4, bg='coral', \
-                                        command=lambda person=person :person.quart_av(*first_q)).grid(row=[counter], column=2, sticky=N+S+E+W)
-                    qb2[counter] = Button(frame, text="2 Quart", width=5, borderwidth=4, bg='dim gray', \
-                                        command=lambda person=person :person.quart_av(*second_q)).grid(row=[counter], column=3, sticky=N+S+E+W)
-                    qb3[counter] = Button(frame, text="3 Quart", width=5, borderwidth=4, bg='medium sea green', \
-                                        command=lambda person=person :person.quart_av(*third_q)).grid(row=[counter], column=4, sticky=N+S+E+W)
-                    qb4[counter] = Button(frame, text="4 Quart", width=5, borderwidth=4, bg='dim gray', \
-                                        command=lambda person=person :person.quart_av(*fourth_q)).grid(row=[counter], column=5, sticky=N+S+E+W)
+                    l[counter] = Label(frame, font=16, anchor=W, justify='left', text=person.first + ':').grid(row=[counter], column=0, stick=N+S+E+W)
+                    e[counter] =Entry(frame,font=('arial', 12, 'bold'), width=5, textvariable=person.text_Input, bd= 3,
+                                        bg="powder blue", justify='left').grid(row=[counter], column=1)
+                    qb[counter] = Button(frame, font=16, text="1 Quart", width=5, borderwidth=4, bg='coral', \
+                                        command=lambda person=person :person.quart_av(*first_q)).grid(row=[counter], column=2)
+                    qb2[counter] = Button(frame, font=16, text="2 Quart", width=5, borderwidth=4, bg='dim gray', \
+                                        command=lambda person=person :person.quart_av(*second_q)).grid(row=[counter], column=3)
+                    qb3[counter] = Button(frame,font=16, text="3 Quart", width=5, borderwidth=4, bg='medium sea green', \
+                                        command=lambda person=person :person.quart_av(*third_q)).grid(row=[counter], column=4)
+                    qb4[counter] = Button(frame, font=16, text="4 Quart", width=5, borderwidth=4, bg='dim gray', \
+                                        command=lambda person=person :person.quart_av(*fourth_q)).grid(row=[counter], column=5)
                     counter += 1
-        
 
-        
+            top_frame = Frame(master)
+            top_frame.grid(row=0, column=0)
+            for i in range(4):
+                Grid.columnconfigure(top_frame, i, weight=1)
+            names_label = Label(top_frame, font=20, text="Students").grid(row=0, column=0, sticky=N+S+E+W)
+            grade_label = Label(top_frame, font=20, text="Grade").grid(row=0, column=2, sticky=N+S+E+W)
+            tq_label = Label(top_frame, font=20, text="Test & Quizzes").grid(row=0, column=4, sticky=N+S+E+W)
+            
+            text_b = Frame(master)
+            text_b.grid(row=2, column=0)
+            text_box = Text(text_b).pack(text_b)
+    
     root.title("Grade Manager")
-    root.minsize(300,300)
-    root.geometry("800x600")
+    root.minsize(400,400)
+    root.geometry("600x400")
     root.grid()
+    for i in range(6):
+        Grid.rowconfigure(root, i, weight=1)
+    
+    Grid.columnconfigure(root, 0, weight=1)
+
     av_button = Buttons(root)
+    
     
     root.mainloop()
   

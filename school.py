@@ -26,19 +26,25 @@ class Student(School):
         vars(self)[item] = dictionary[person][item]
         
     def get_grade(self, grade_number):
-        return float(vars(self)[grade_number])
+        try:
+            return float(vars(self)[grade_number])
+        except KeyError:
+            self.text_Input.set("N/A")
 
     def quart_av(self, q_num1, q_num2, t_num):
         global grade
         global text_Input
-        quiz_grade = (((self.get_grade(q_num1) + self.get_grade(q_num2))) / 2) / 2
-        test_grade = self.get_grade(t_num) / 2
-        av = quiz_grade + test_grade
-        av = ceil(av)
-        grade = str(av)
-        self.text_Input.set(grade + '%')
-        return av
-        
+        try:
+            quiz_grade = (((self.get_grade(q_num1) + self.get_grade(q_num2))) / 2) / 2
+            test_grade = self.get_grade(t_num) / 2
+            av = quiz_grade + test_grade
+            av = ceil(av)
+            grade = str(av)
+            self.text_Input.set(grade + '%')
+            return av
+        except TypeError:
+            print("The quarter avarage is not yet available.")
+    
     @property
     def get_fullname(self):
         return '{} {}'.format(self.first, self.last)
