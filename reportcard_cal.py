@@ -130,8 +130,9 @@ with open(qu_path, 'r') as quizgrades, \
     class Buttons():
         
         def __init__(self, master):
+            self.master = master
             frame = Frame(master)
-            frame.grid(row=1, column=0, sticky=N+S+W)
+            frame.grid(row=1, column=0, sticky=W+N)
             for i in range(20):
                 Grid.rowconfigure(frame, i, weight=1)
             for i in range(20):
@@ -154,30 +155,35 @@ with open(qu_path, 'r') as quizgrades, \
             l = e.copy()
             while counter < (len(objs)):
                 for person in objs:
-                    l[counter] = Label(frame, font=16, anchor=W, justify='left', text=person.first + ':').grid(row=[counter], column=0, stick=N+S+E+W)
+                    l[counter] = Label(frame, font=16, anchor=W, justify='left', text=person.first + ':'). \
+                                       grid(row=[counter + 1], column=0, stick=N+S+E+W)
                     e[counter] =Entry(frame,font=('arial', 12, 'bold'), width=5, textvariable=person.text_Input, bd= 3,
-                                        bg="powder blue", justify='left').grid(row=[counter], column=1)
+                                        bg="powder blue", justify='left').grid(row=[counter + 1], column=1)
                     qb[counter] = Button(frame, font=16, text="1 Quart", width=5, borderwidth=4, bg='coral', \
-                                        command=lambda person=person :person.quart_av(*first_q)).grid(row=[counter], column=2)
+                                        command=lambda person=person :person.quart_av(*first_q)). \
+                                        grid(row=[counter + 1], column=2)
                     qb2[counter] = Button(frame, font=16, text="2 Quart", width=5, borderwidth=4, bg='dim gray', \
-                                        command=lambda person=person :person.quart_av(*second_q)).grid(row=[counter], column=3)
+                                        command=lambda person=person :person.quart_av(*second_q)). \
+                                        grid(row=[counter + 1], column=3)
                     qb3[counter] = Button(frame,font=16, text="3 Quart", width=5, borderwidth=4, bg='medium sea green', \
-                                        command=lambda person=person :person.quart_av(*third_q)).grid(row=[counter], column=4)
+                                        command=lambda person=person :person.quart_av(*third_q)). \
+                                        grid(row=[counter + 1], column=4)
                     qb4[counter] = Button(frame, font=16, text="4 Quart", width=5, borderwidth=4, bg='dim gray', \
-                                        command=lambda person=person :person.quart_av(*fourth_q)).grid(row=[counter], column=5)
+                                        command=lambda person=person :person.quart_av(*fourth_q)). \
+                                        grid(row=[counter + 1], column=5)
                     counter += 1
 
-            top_frame = Frame(master)
-            top_frame.grid(row=0, column=0)
-            for i in range(4):
-                Grid.columnconfigure(top_frame, i, weight=1)
-            names_label = Label(top_frame, font=20, text="Students").grid(row=0, column=0, sticky=N+S+E+W)
-            grade_label = Label(top_frame, font=20, text="Grade").grid(row=0, column=2, sticky=N+S+E+W)
-            tq_label = Label(top_frame, font=20, text="Test & Quizzes").grid(row=0, column=4, sticky=N+S+E+W)
+            names_label = Label(frame, font=("Helvetica", 18, "bold italic") , fg='red', text="Students:").grid(row=0, column=0, sticky=N+S+E+W)
+            grade_label = Label(frame, font=("Helvetica", 18, "bold italic"), fg='red', text="Grade:").grid(row=0, column=1, sticky=N+S+E+W)
+            tq_label = Label(frame, font=("Helvetica", 18, "bold italic"), fg='red', text="Test & Quizzes:").grid(row=0, column=3, columnspan=3, sticky=N+S+E+W)
             
             text_b = Frame(master)
-            text_b.grid(row=2, column=0)
-            text_box = Text(text_b).pack(text_b)
+            text_b.grid(row=2, column=0, sticky=N+W)
+            for i in range(2):
+                Grid.rowconfigure(master, i, weight=1)
+            for i in range(2):
+                Grid.columnconfigure(master, i, weight=1)
+            text_box = Text(text_b, height=10, width=54, bd= 5).grid(row=0, column =0)
     
     root.title("Grade Manager")
     root.minsize(400,400)
