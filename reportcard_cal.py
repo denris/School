@@ -4,7 +4,7 @@
 ### Take care of any necessary imports ###
 import csv
 from school import  School, Student, Teacher
-from tkinter import *
+import tkinter as tk
 
 
 # Quiz & Test grades Path
@@ -121,32 +121,41 @@ with open(qu_path, 'r') as quizgrades, \
     fourth_q = ['Q7','Q8','T4']
     
     
-    root = Tk()
-    grade = ''
-    for person in objs:
-        person.text_Input = StringVar()
+    class GradeManager(tk.Tk):
+
+        def __init__(self, *args, **kwargs):
+            tk.Tk.__init__(self, *args, **kwargs)
+
+            self.title("Grade Manager")
+            self.minsize(400,400)
+            self.geometry("600x400")
+            self.grid()
+            tk.Grid.rowconfigure(self, 0, weight=1)
+            tk.Grid.columnconfigure(self, 0, weight=1)
+            grade = ''
+            for person in objs:
+                person.text_Input = tk.StringVar()
+    
+            av_buttons = Grades(self)
+            text_box = Results(self)
     
     
-    class Buttons():
+    class Grades(tk.Frame):
         
-        def __init__(self, master):
-            self.master = master
-            frame = Frame(master)
-            frame.grid(row=1, column=0, sticky=W+N)
-            for i in range(20):
-                Grid.rowconfigure(frame, i, weight=1)
-            for i in range(20):
-                Grid.columnconfigure(frame, i, weight=1)
+        def __init__(self, parent):
+            tk.Frame.__init__(self, parent)
+            
+            self.grid(row=1, column=0, sticky="wn")
+            tk.Grid.rowconfigure(self, 0, weight=1)
+            tk.Grid.columnconfigure(self, 0, weight=1)
 
             counter = 0
             ### Making a dict so I can iterate to make multiple Entry Boxes ###
             e = {}
-            
             for x in range(len(objs)):
                 e["string{}".format(x)]=int
             
             ### Copying dict e so I can iterate to make multiple Buttons ###
-            
             qb = e.copy()
             qb2 = e.copy()
             qb3 = e.copy()
@@ -155,48 +164,44 @@ with open(qu_path, 'r') as quizgrades, \
             l = e.copy()
             while counter < (len(objs)):
                 for person in objs:
-                    l[counter] = Label(frame, font=16, anchor=W, justify='left', text=person.first + ':'). \
-                                       grid(row=[counter + 1], column=0, stick=N+S+E+W)
-                    e[counter] =Entry(frame,font=('arial', 12, 'bold'), width=5, textvariable=person.text_Input, bd= 3,
+                    l[counter] = tk.Label(self, font=16, anchor="w", justify='left', text=person.first + ':'). \
+                                       grid(row=[counter + 1], column=0, sticky="nsew")
+                    e[counter] = tk.Entry(self,font=('arial', 12, 'bold'), width=5, textvariable=person.text_Input, bd= 3,
                                         bg="powder blue", justify='left').grid(row=[counter + 1], column=1)
-                    qb[counter] = Button(frame, font=16, text="1 Quart", width=5, borderwidth=4, bg='coral', \
+                    qb[counter] = tk.Button(self, font=16, text="1 Quart", width=5, borderwidth=4, bg='coral', \
                                         command=lambda person=person :person.quart_av(*first_q)). \
                                         grid(row=[counter + 1], column=2)
-                    qb2[counter] = Button(frame, font=16, text="2 Quart", width=5, borderwidth=4, bg='dim gray', \
+                    qb2[counter] = tk.Button(self, font=16, text="2 Quart", width=5, borderwidth=4, bg='dim gray', \
                                         command=lambda person=person :person.quart_av(*second_q)). \
                                         grid(row=[counter + 1], column=3)
-                    qb3[counter] = Button(frame,font=16, text="3 Quart", width=5, borderwidth=4, bg='medium sea green', \
+                    qb3[counter] = tk.Button(self,font=16, text="3 Quart", width=5, borderwidth=4, bg='medium sea green', \
                                         command=lambda person=person :person.quart_av(*third_q)). \
                                         grid(row=[counter + 1], column=4)
-                    qb4[counter] = Button(frame, font=16, text="4 Quart", width=5, borderwidth=4, bg='dim gray', \
+                    qb4[counter] = tk.Button(self, font=16, text="4 Quart", width=5, borderwidth=4, bg='dim gray', \
                                         command=lambda person=person :person.quart_av(*fourth_q)). \
                                         grid(row=[counter + 1], column=5)
                     counter += 1
 
-            names_label = Label(frame, font=("Helvetica", 18, "bold italic") , fg='red', text="Students:").grid(row=0, column=0, sticky=N+S+E+W)
-            grade_label = Label(frame, font=("Helvetica", 18, "bold italic"), fg='red', text="Grade:").grid(row=0, column=1, sticky=N+S+E+W)
-            tq_label = Label(frame, font=("Helvetica", 18, "bold italic"), fg='red', text="Test & Quizzes:").grid(row=0, column=3, columnspan=3, sticky=N+S+E+W)
+            names_label = tk.Label(self, font=("Helvetica", 18, "bold italic") , fg='red', text="Students:").grid(row=0, column=0, sticky="nsew")
+            grade_label = tk.Label(self, font=("Helvetica", 18, "bold italic"), fg='red', text="Grade:").grid(row=0, column=1, sticky="nsew")
+            tq_label = tk.Label(self, font=("Helvetica", 18, "bold italic"), fg='red', text="Test & Quizzes:").grid(row=0, column=3, columnspan=3, sticky="nsew")
             
-            text_b = Frame(master)
-            text_b.grid(row=2, column=0, sticky=N+W)
-            for i in range(2):
-                Grid.rowconfigure(master, i, weight=1)
-            for i in range(2):
-                Grid.columnconfigure(master, i, weight=1)
-            text_box = Text(text_b, height=10, width=54, bd= 5).grid(row=0, column =0)
+           
+    class Results(tk.Frame):
     
-    root.title("Grade Manager")
-    root.minsize(400,400)
-    root.geometry("600x400")
-    root.grid()
-    for i in range(6):
-        Grid.rowconfigure(root, i, weight=1)
-    
-    Grid.columnconfigure(root, 0, weight=1)
-
-    av_button = Buttons(root)
+        def __init__(self, parent):
+            tk.Frame.__init__(self, parent)
+            
+            self.grid(row=0, column=0, sticky="wn")
+            tk.Grid.rowconfigure(self, 0, weight=1)
+            tk.Grid.columnconfigure(self, 0, weight=1)
+            self.grid(row=2, column=0, sticky="nw")
+            tk.Grid.rowconfigure(self, 0, weight=1)
+            tk.Grid.columnconfigure(self, 0, weight=1)
+            text_box = tk.Text(self, height=10, width=54, pady=5, bd= 5).grid(row=0, column =0)
     
     
+    root = GradeManager()
     root.mainloop()
   
    
