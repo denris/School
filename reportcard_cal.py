@@ -128,7 +128,7 @@ with open(qu_path, 'r') as quizgrades, \
 
             self.title("Grade Manager")
             self.minsize(400,400)
-            self.geometry("600x400")
+            self.geometry("600x450")
             self.grid()
             tk.Grid.rowconfigure(self, 0, weight=1)
             tk.Grid.columnconfigure(self, 0, weight=1)
@@ -192,13 +192,13 @@ with open(qu_path, 'r') as quizgrades, \
         def __init__(self, parent):
             tk.Frame.__init__(self, parent)
             
-            self.grid(row=0, column=0, sticky="wn")
+            self.grid(row=0, column=0, pady=5, padx=5, sticky="wn")
             tk.Grid.rowconfigure(self, 0, weight=1)
             tk.Grid.columnconfigure(self, 0, weight=1)
             self.grid(row=2, column=0, sticky="nw")
             tk.Grid.rowconfigure(self, 0, weight=1)
             tk.Grid.columnconfigure(self, 0, weight=1)
-            text_box = tk.Text(self, height=10, width=54, pady=5, bd= 5).grid(row=0, column =0)
+            text_box = tk.Text(self, height=10, width=52, bd= 5).grid(row=0, column =0)
     
     
     root = GradeManager()
